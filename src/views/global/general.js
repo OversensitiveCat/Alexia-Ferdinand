@@ -1,26 +1,26 @@
 import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
-const setHeading = () => {
-  return gsap.to('.main-heading', {
-    top: 0,
-    autoAlpha: 1,
+gsap.registerPlugin(ScrollToPlugin)
+
+const animationLeave = (container) => {
+  return gsap.to(container, {
+    autoAlpha: 0,
+    yPercent: 25,
     duration: 1,
-    ease: 'power4.out',
+    ease: 'power1.in',
   })
 }
 
-const animationLeave = (container) => {
-  return gsap.to(container, { autoAlpha: 0, yPercent: 50, duration: 1 })
-}
-
-const reset = () => {
-  let tl = gsap.timeline()
-  tl.set('.main-heading', { top: 0, autoAlpha: 1 }).to(window, { scrollTo: 0 })
-  return tl
-}
-const rectifyHeight = () => {
-  let headerHeight = document.querySelector('.main-heading').offsetHeight
-  return gsap.set('.empty-header', { height: headerHeight, duration: 0 })
+const reset = (data) => {
+  if (data.next.namespace != 'home') {
+    let tl = gsap.timeline()
+    tl.set('.home-subheading', { opacity: 0, height: 0, duration: 0 }).set(
+      '.heading-container',
+      { position: 'relative' }
+    )
+    return tl
+  } else return
 }
 
 const color = (data) => {
@@ -37,4 +37,4 @@ const color = (data) => {
   gsap.to('.main-heading', { color: color })
 }
 
-export { setHeading, animationLeave, reset, rectifyHeight, color }
+export { animationLeave, reset, color }
