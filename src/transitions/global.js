@@ -4,18 +4,20 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 gsap.registerPlugin(ScrollToPlugin)
 
 const animationLeave = (container) => {
-  return gsap.to(container, {
+  let tl = gsap.timeline()
+  tl.to(container, {
+    ease: 'power1.inOut',
+    duration: 0.8,
     autoAlpha: 0,
     yPercent: 75,
-    duration: 0.8,
-    ease: 'power1.inOut',
-  })
+  }).to(window, { ease: 'power1.inOut', duration: 0.8, scrollTo: 0 }, 0)
+  return tl
 }
 
 const reset = (data) => {
   if (data.next.namespace != 'home') {
     let tl = gsap.timeline()
-    tl.set('.home-subheading', { opacity: 0, height: 0, duration: 0 }).set(
+    tl.set('.home-subheading', { opacity: 0, height: 0 }).set(
       '.heading-container',
       { position: 'relative' }
     )

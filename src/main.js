@@ -1,24 +1,23 @@
 import barba from '@barba/core'
 import barbaPrefetch from '@barba/prefetch'
 
-import { reset } from './transitions/global'
-import { animationLeave } from './transitions/global'
-import { color } from './transitions/global'
+import { reset, animationLeave, color } from './transitions/global'
 import {
   homeEnter,
   homeLeave,
   headingHome,
 } from './transitions/home_transitions'
 import enterPortfolio from './transitions/portfolio_enter'
+import enterProject from './transitions/project_enter'
 import enterStudio from './transitions/studio_enter'
 import footer from './views/global/footer'
 import { setLenis } from './views/global/lenis'
 import navMobile from './views/global/navMobile'
 import portfolio from './views/portfolio'
+import project from './views/project'
 import studio from './views/studio'
 
 barba.hooks.leave((data) => {
-  window.scrollTo(0, 0)
   color(data)
 })
 
@@ -30,6 +29,7 @@ barba.hooks.afterEnter((data) => {
   setLenis()
   footer(data)
   navMobile(data)
+  project(data)
 })
 
 barba.use(barbaPrefetch)
@@ -94,22 +94,15 @@ barba.init({
         enterPortfolio(next.container)
       },
     },
-    // {
-    //   name: 'project',
-    //   to: { namespace: ['project'] },
-    //   beforeOnce: ({ next }) => {
-    //     reset(next.container), rectifyHeight(next.container)
-    //   },
-    //   once({ next }) {
-    //     enterProject(next.container)
-    //   },
-    //   leave: ({ current }) => animationLeave(current.container),
-    //   beforeEnter: ({ next }) => {
-    //     reset(next.container), rectifyHeight(next.container)
-    //   },
-    //   enter({ next }) {
-    //     enterProject(next.container)
-    //   },
-    // },
+    {
+      name: 'project',
+      leave: ({ current }) => animationLeave(current.container),
+      enter({ next }) {
+        enterProject(next.container)
+      },
+      once({ next }) {
+        enterProject(next.container)
+      },
+    },
   ],
 })

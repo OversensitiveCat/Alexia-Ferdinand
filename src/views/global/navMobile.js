@@ -66,7 +66,7 @@ const navMobile = (data) => {
               lenis.stop()
             } else if (progress == 1) {
               nav.reverse()
-              lenis.play()
+              lenis.start()
             }
           })
 
@@ -76,7 +76,7 @@ const navMobile = (data) => {
             nav.reverse()
             nav.eventCallback('onReverseComplete', () => {
               goToStudio()
-              lenis.play()
+              lenis.start()
             })
           })
 
@@ -86,7 +86,7 @@ const navMobile = (data) => {
             nav.reverse()
             nav.eventCallback('onReverseComplete', () => {
               goToPortfolio()
-              lenis.play()
+              lenis.start()
             })
           })
       })
