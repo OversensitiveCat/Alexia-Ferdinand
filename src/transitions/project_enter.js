@@ -7,9 +7,9 @@ const enterProject = (container) => {
   const tl = gsap.timeline()
   tl.from(container, {
     autoAlpha: 0,
-    yPercent: 50,
-    duration: 1,
-    ease: 'power4.out',
+    yPercent: 25,
+    duration: 1.2,
+    ease: 'power1.out',
   }).from(charsTitleProject, {
     autoAlpha: 0,
     scale: 0.5,

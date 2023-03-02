@@ -6,9 +6,9 @@ gsap.registerPlugin(ScrollToPlugin)
 const animationLeave = (container) => {
   return gsap.to(container, {
     autoAlpha: 0,
-    yPercent: 25,
-    duration: 1,
-    ease: 'power1.in',
+    yPercent: 75,
+    duration: 0.8,
+    ease: 'power1.inOut',
   })
 }
 
@@ -24,17 +24,20 @@ const reset = (data) => {
 }
 
 const color = (data) => {
-  let container = data.next.container
-  console.log(container)
-  console.log(background, color)
-
   let parser = new DOMParser()
   let dom = parser.parseFromString(data.next.html, 'text/html')
   let main = dom.querySelector('.main')
   let background = main.getAttribute('data-background')
   let color = main.getAttribute('data-color')
-  gsap.to('body', { backgroundColor: background })
-  gsap.to('.main-heading', { color: color })
+  let tl = gsap.timeline()
+  tl.to('body', { backgroundColor: background }).to(
+    '.main-heading',
+    {
+      color: color,
+    },
+    '<'
+  )
+  return tl
 }
 
 export { animationLeave, reset, color }

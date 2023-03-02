@@ -29,9 +29,9 @@ const enterStudio = (container) => {
   let tl = gsap.timeline()
   tl.from(container, {
     autoAlpha: 0,
-    yPercent: 25,
+    yPercent: 75,
     duration: 1.2,
-    ease: 'power1.out',
+    ease: 'power1.inOut',
   })
     .from(
       '.nav-link',
