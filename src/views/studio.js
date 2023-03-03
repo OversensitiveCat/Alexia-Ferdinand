@@ -64,8 +64,41 @@ const studio = () => {
       } else return
     })
 
-    // MOBILE
     let mm = gsap.matchMedia()
+    // DESKTOP
+    mm.add('(min-width: 768px)', () => {
+      const projects = gsap.utils.toArray('.last-project')
+      projects.forEach((project) => {
+        let arrow = project.querySelector('.arrow-project')
+        project.addEventListener('mouseenter', () => {
+          gsap.to(arrow, {
+            scale: 1.1,
+            yPercent: -10,
+            xPercent: 10,
+            duration: 0.3,
+          })
+        })
+        project.addEventListener('mouseleave', () => {
+          gsap.to(arrow, {
+            scale: 1,
+            yPercent: 0,
+            xPercent: 0,
+            duration: 0.3,
+          })
+        })
+      })
+
+      const link = document.querySelector('.link-portfolio')
+      link.addEventListener('mouseenter', () => {
+        gsap.to(link, { color: '#464e6a', duration: 0.2, ease: 'none' })
+      })
+      link.addEventListener('mouseleave', () => {
+        gsap.to(link, { color: '#f47224', duration: 0.2, ease: 'none' })
+      })
+    })
+
+    // MOBILE
+
     mm.add('(max-width: 767px)', () => {
       gsap.set('.studio-content, .service', { opacity: 1 })
       const servicesBox = gsap.utils.toArray('.service')

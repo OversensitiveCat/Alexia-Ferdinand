@@ -73,7 +73,7 @@ const navMobile = (data) => {
         })
 
         function goToStudio() {
-          barba.go('https://www.alexiaferdinand.fr/le-studio')
+          barba.go('https://www.alexiaferdinand.fr/studio')
         }
         function goToPortfolio() {
           barba.go('https://www.alexiaferdinand.fr/portfolio')
