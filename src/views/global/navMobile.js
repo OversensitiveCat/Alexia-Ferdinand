@@ -1,5 +1,9 @@
 import barba from '@barba/core'
 import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 import { lenis } from './lenis'
 
@@ -8,42 +12,65 @@ const navMobile = (data) => {
     if (data.next.namespace != 'home') {
       let mm = gsap.matchMedia()
       mm.add('(max-width: 767px)', () => {
-        const lineOne = document.querySelector('.line-hamburger1')
-        const lineTwo = document.querySelector('.line-hamburger2')
+        let main = false
+        ScrollTrigger.create({
+          trigger: '.main',
+          start: 'top top',
+          onEnter: () => {
+            main = true
+          },
+          onLeaveBack: () => {
+            main = false
+          },
+        })
+        function scroll() {
+          if (main === false) {
+            gsap.to(window, { scrollTo: '.main' })
+          } else return
+        }
 
-        let nav = gsap.timeline({ paused: true, ease: 'power2.in' })
+        const lineOne = document.querySelector('.hamburger-line1')
+        const lineTwo = document.querySelector('.hamburger-line2')
+        const li = gsap.utils.toArray('.list-nav-mob > li')
+        let height = window.innerHeight
+        let nav = gsap.timeline({ paused: true })
         nav
-          .to(lineOne, { top: '10px', duration: 0.25 })
-          .to(lineTwo, { top: '40px', duration: 0.25 }, '<')
-          .to('.main', { backgroundColor: '#f47224' }, '<')
-          .to('.main-heading', { autoAlpha: 0 }, '<')
-          .to('.card-background', { backgroundColor: '#f47224' }, '<')
-          .to('.content', { autoAlpha: 0 }, '<')
-          .to('.nav_link-container-mob', { scale: 1, duration: 0.1 })
-          .to(
-            lineOne,
-            { top: '25px', width: '25px', height: '2px', duration: 0.2 },
-            '+=0.1'
+          .set('.nav-mobile', { opacity: 1 })
+          .set(
+            '.menu-mobile-container',
+            { width: '100%', height: height, marginBottom: -height },
+            0
           )
-          .to(
-            lineTwo,
-            { top: '25px', width: '25px', height: '2px', duration: 0.2 },
-            '<'
-          )
+          .to(lineOne, { top: '15px', duration: 0.2 }, 0)
+          .to(lineTwo, { top: '49px', duration: 0.2 }, 0)
+          .to('.menu-mobile-container', { backgroundColor: '#f47224' }, 0)
+          .to(lineOne, { top: '32px', width: '36px', duration: 0.2 }, '+=0.1')
+          .to(lineTwo, { top: '32px', width: '36px', duration: 0.2 }, '<')
           .to(lineOne, { transformOrigin: 'center', rotate: 45, duration: 0.3 })
           .to(
             lineTwo,
             { transformOrigin: 'center', rotate: -45, duration: 0.3 },
             '<'
           )
-          .from('.studio-nav-mob', { autoAlpha: 0, yPercent: 50 }, '<')
-          .from('.portfolio-nav-mob', { autoAlpha: 0, yPercent: 50 }, '-=0.25')
-          .from('.contact-nav-mob', { autoAlpha: 0, yPercent: 50 }, '-=0.25')
+          .from(li, { autoAlpha: 0, yPercent: 50, stagger: 0.25 }, '<')
           .from(
             '.link-social-nav-mob',
             { autoAlpha: 0, yPercent: 50, stagger: 0.2 },
             '-=0.25'
           )
+
+        document.querySelector('.hamburger').addEventListener('click', () => {
+          let progress = nav.progress()
+          if (progress == 0) {
+            scroll()
+            nav.play()
+            lenis.stop()
+          } else {
+            scroll()
+            nav.reverse()
+            lenis.start()
+          }
+        })
 
         function goToStudio() {
           barba.go('https://www.alexiaferdinand.fr/le-studio')
@@ -52,47 +79,25 @@ const navMobile = (data) => {
           barba.go('https://www.alexiaferdinand.fr/portfolio')
         }
 
-        document
-          .querySelector('.hamburger-container')
-          .addEventListener('click', () => {
-            let progress = nav.progress()
-            if (progress == 0) {
-              const viewportHeight = window.innerHeight
-              const headingHeight =
-                document.querySelector('.main-heading').offsetHeight
-              const height = viewportHeight - headingHeight - 80
-              gsap.to('.nav_link-container-mob', { height: height })
-              nav.play()
-              lenis.stop()
-            } else if (progress == 1) {
-              nav.reverse()
-              lenis.start()
-            }
+        li[0].addEventListener('click', () => {
+          nav.reverse()
+          nav.eventCallback('onReverseComplete', () => {
+            goToStudio()
+            lenis.start()
           })
+        })
 
-        document
-          .querySelector('.studio-nav-mob')
-          .addEventListener('click', () => {
-            nav.reverse()
-            nav.eventCallback('onReverseComplete', () => {
-              goToStudio()
-              lenis.start()
-            })
+        li[1].addEventListener('click', () => {
+          nav.reverse()
+          nav.eventCallback('onReverseComplete', () => {
+            goToPortfolio()
+            lenis.start()
           })
-
-        document
-          .querySelector('.portfolio-nav-mob')
-          .addEventListener('click', () => {
-            nav.reverse()
-            nav.eventCallback('onReverseComplete', () => {
-              goToPortfolio()
-              lenis.start()
-            })
-          })
+        })
       })
     } else return
   }
-  return gsap.delayedCall(1, navFunction)
+  return gsap.delayedCall(2, navFunction)
 }
 
 export default navMobile

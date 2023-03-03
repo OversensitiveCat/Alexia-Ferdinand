@@ -106,7 +106,7 @@ const enterStudio = (container) => {
           duration: 1.2,
           ease: 'power1.inOut',
         })
-          .from('.hamburger-container', {
+          .from('.hamburger', {
             opacity: 0,
             yPercent: 200,
             duration: 0.6,
