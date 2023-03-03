@@ -5,7 +5,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 const enterStudio = (container) => {
   let mm = gsap.matchMedia()
-
   mm.add(
     {
       isTabDesk: '(min-width: 768px)',

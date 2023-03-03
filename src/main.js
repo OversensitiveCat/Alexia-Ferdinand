@@ -36,7 +36,6 @@ barba.use(barbaPrefetch)
 
 barba.init({
   timeout: 4000,
-  debug: true,
   views: [
     {
       namespace: 'studio',

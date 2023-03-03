@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const portfolio = () => {
   function portfolioFunction() {
-    gsap.set('#portfolio-raw2', { autoAlpha: 1 })
+    gsap.set('#portfolio-raw2', { opacity: 1 })
 
     let itemsRawTwo = gsap.utils.toArray('#portfolio-raw2 > .portfolio-item')
     let flowersRawTwo = gsap.utils.toArray('#portfolio-raw2 > .flower-project')
@@ -13,7 +13,7 @@ const portfolio = () => {
     const tl = gsap.timeline({ paused: true })
     tl.from(
       itemsRawTwo,
-      { opacity: 0, yPercent: 30, duration: 0.8, stagger: { amount: 0.6 } },
+      { opacity: 0, yPercent: 50, duration: 1, stagger: { amount: 0.6 } },
       '-=0.3'
     ).from(
       flowersRawTwo,
@@ -29,16 +29,7 @@ const portfolio = () => {
 
     ScrollTrigger.create({
       trigger: '#portfolio-raw2',
-      start: 'top bottom',
-      onLeaveBack: () => {
-        tl.progress(0)
-        tl.pause()
-      },
-    })
-
-    ScrollTrigger.create({
-      trigger: '#portfolio-raw2',
-      start: 'center 80%',
+      start: 'top 70%',
       onEnter: () => tl.play(),
     })
 

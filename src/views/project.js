@@ -12,26 +12,25 @@ const project = (data) => {
       data.next.namespace != 'studio' &&
       data.next.namespace != 'portfolio'
     ) {
-      console.log('Here is a project')
       // Intro
-      gsap.set('.description-project, .site-live-button', { autoAlpha: 1 })
+      gsap.set('.description-project, .site-live-button', { opacity: 1 })
 
       let tl = gsap.timeline({ paused: true })
-      tl.from('.project-present', { autoAlpha: 0, yPercent: 30, duration: 0.6 })
+      tl.from('.project-present', { opacity: 0, yPercent: 30, duration: 0.6 })
         .from(
           '.project-services-heading',
-          { autoAlpha: 0, yPercent: -100 },
+          { opacity: 0, yPercent: -100 },
           '-=0.2'
         )
         .from('.project-service', {
-          autoAlpha: 0,
+          opacity: 0,
           stagger: 0.25,
           yPercent: 50,
           duration: 0.4,
         })
         .from(
           '.site-live-button',
-          { autoAlpha: 0, yPercent: 50, duration: 0.6 },
+          { opacity: 0, yPercent: 50, duration: 0.6 },
           '-=0.5'
         )
 
@@ -64,10 +63,10 @@ const project = (data) => {
         })
         let content = media.querySelector('.media-content')
         tl.from(content, {
-          yPercent: -120,
-          scale: 1.2,
+          opacity: 0,
+          scale: 0.8,
           transformOrigin: 'center',
-          duration: 1.6,
+          duration: 1,
           ease: 'power2.out',
         })
       })
@@ -79,7 +78,7 @@ const project = (data) => {
             trigger: sub,
             start: 'top 75%',
           },
-          autoAlpha: 0,
+          opacity: 0,
           yPercent: 60,
           duration: 0.6,
         })
@@ -92,7 +91,7 @@ const project = (data) => {
             trigger: para,
             start: 'top 75%',
           },
-          autoAlpha: 0,
+          opacity: 0,
           yPercent: 40,
           duration: 0.8,
         })

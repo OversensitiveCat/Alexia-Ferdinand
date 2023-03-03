@@ -20,22 +20,77 @@ const enterProject = (container) => {
       '+=0.5'
     )
 
-  const tl = gsap.timeline()
-  tl.from(container, {
-    autoAlpha: 0,
-    yPercent: 25,
-    duration: 1.2,
-    ease: 'power1.out',
-  }).from(charsTitleProject, {
-    autoAlpha: 0,
-    scale: 0.5,
-    transformOrigin: 'bottom left',
-    duration: 0.2,
-    ease: 'power2.out',
-    stagger: { amount: 0.6 },
-  })
+  let tl = gsap.timeline()
 
-  return tl
+  let mm = gsap.matchMedia()
+  mm.add(
+    {
+      isTabDesk: '(min-width: 768px)',
+      isMobile: '(max-width: 767px)',
+    },
+    (context) => {
+      let { isTabDesk, isMobile } = context.conditions
+
+      if (isTabDesk) {
+        tl.from(container, {
+          autoAlpha: 0,
+          yPercent: 75,
+          duration: 1.2,
+          ease: 'power1.out',
+        })
+          .from(
+            '.nav-link',
+            {
+              autoAlpha: 0,
+              duration: 0.8,
+              stagger: 0.2,
+              yPercent: 100,
+            },
+            '-=0.2'
+          )
+          .from(
+            charsTitleProject,
+            {
+              autoAlpha: 0,
+              scale: 0.5,
+              transformOrigin: 'bottom left',
+              duration: 0.2,
+              ease: 'power2.out',
+              stagger: { amount: 0.6 },
+            },
+            '-=0.5'
+          )
+
+        return tl
+      } else if (isMobile) {
+        tl.from(container, {
+          autoAlpha: 0,
+          yPercent: 50,
+          duration: 1.2,
+          ease: 'power1.out',
+        })
+          .from('.hamburger', {
+            opacity: 0,
+            yPercent: 200,
+            duration: 0.6,
+          })
+          .from(
+            charsTitleProject,
+            {
+              autoAlpha: 0,
+              scale: 0.5,
+              transformOrigin: 'bottom left',
+              duration: 0.2,
+              ease: 'power2.out',
+              stagger: { amount: 0.6 },
+            },
+            '-=0.3'
+          )
+
+        return tl
+      }
+    }
+  )
 }
 
 export default enterProject
