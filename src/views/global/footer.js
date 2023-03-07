@@ -71,7 +71,7 @@ const footer = (data) => {
     } else return
   }
 
-  return gsap.delayedCall(1.5, footerAnim)
+  return gsap.delayedCall(2.5, footerAnim)
 }
 
 export default footer

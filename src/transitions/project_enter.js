@@ -65,7 +65,7 @@ const enterProject = (container) => {
       } else if (isMobile) {
         tl.from(container, {
           autoAlpha: 0,
-          yPercent: 50,
+          yPercent: 40,
           duration: 1.2,
           ease: 'power1.out',
         })

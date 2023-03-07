@@ -22,6 +22,7 @@ barba.hooks.leave((data) => {
 })
 
 barba.hooks.beforeEnter((data) => {
+  window.scrollTo(0, 0)
   window.addEventListener('unload', () => window.scrollTo(0, 0))
   reset(data)
 })

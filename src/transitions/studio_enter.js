@@ -46,7 +46,7 @@ const enterStudio = (container) => {
 
         tl.from(container, {
           autoAlpha: 0,
-          yPercent: 75,
+          yPercent: isMobile ? 40 : 75,
           duration: 1.2,
           ease: 'power1.inOut',
         })
